@@ -26,7 +26,7 @@ router.post("/", function(req, res, next){
                         );
                     } else {
                         res.json({
-                            "fulfillmentText": "No account was found for the number " + req.body.queryResult.parameters.accountNumber
+                            "fulfillmentText": "No account was found for the number " + req.body.queryResult.parameters.accountNumber + ". Please enter a valid account number."
                         });
                     }
                     
