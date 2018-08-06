@@ -17,7 +17,12 @@ router.post("/", function(req, res, next){
     if(req.body.queryResult.action === "userinfopls"){
         UserInfo.findOne({accountNumber: req.body.queryResult.parameters.accountNumber})
                 .exec(function(err, info){
-                    if(err) return next(err);
+                    if(err){
+                        res.json({
+                            "fullfillmentText": "No account was found for the account number " + req.body.queryResult.parameters.accountNumber
+                        });
+                        return next(err);
+                    } 
                     res.json(
                         {
                             "fulfillmentText": "Hello " + info.name + " these are your books: " + info.books,
