@@ -4,6 +4,9 @@ var express = require("express");
 var router = express.Router();
 var UserInfo = require("./models").UserInfo;
 var request = require("request");
+var bodyParser = require("body-parser").json;
+
+router.use(bodyParser());
 
 var postData = {
     tenancyName: "Roboyo_MGladstein",
@@ -61,6 +64,14 @@ router.post("/", function(req, res, next){
     }
 
     if(req.body.queryResult.action === "suspend.date"){
+    
+        var start = req.body.queryResult.parameters.action;
+        //var end = req.body.queryResult.outputContexts[1].parameters.date-period.endDate;
+        var name = req.body.queryResult.outputContexts[1].parameters.name;
+        var email = req.body.queryResult.outputContexts[1].parameters.email;
+        var accountNumber = req.body.queryResult.outputContexts[1].parameters.accountNumber;
+        var book = req.body.queryResult.outputContexts[1].parameters.books;
+
         request(authOptions, function(err, res, body){
             if(err){
                 console.error('error posting json: ', err);
@@ -72,10 +83,15 @@ router.post("/", function(req, res, next){
             var postDataQueue = {
                 itemData: {
                     Priority: "Normal",
+                    Reference: name,
                     Name: "ApiQueue",
                     SpecificContent: {
-                        name: req.body.outputContexts[1].parameters.name,
-                        email: req.body.outputContexts[1].parameters.email
+                        start: start,
+                        //end: end,
+                        name: name,
+                        email: email,
+                        accountNumber: accountNumber,
+                        book: book
                     }
                 }
             };
