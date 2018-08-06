@@ -18,11 +18,18 @@ router.post("/", function(req, res, next){
             UserInfo.findOne({accountNumber: req.body.queryResult.parameters.accountNumber})
                 .exec(function(err, info){
                     if(err) return next(err);
-                    res.json(
-                        {
-                            "fulfillmentText": "Hello " + info.name + " these are your books: " + info.books,
-                        }
-                    );
+                    if(info){
+                        res.json(
+                            {
+                                "fulfillmentText": "Hello " + info.name + " these are your books: " + info.books,
+                            }
+                        );
+                    } else {
+                        res.json({
+                            "fulfillmentText": "No account was found for the number " + req.body.queryResult.parameters.accountNumber
+                        });
+                    }
+                    
             });
     }
 });
