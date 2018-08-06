@@ -15,7 +15,7 @@ router.get("/", function(req, res, next){
 
 router.post("/", function(req, res, next){
     if(req.body.queryResult.action === "userinfopls"){
-            UserInfo.findOne({accountNumber: req.body.queryResult.parameters.accountNumber})
+            UserInfo.findOne({accountNumber: req.body.queryResult.parameters.accountNumber, email: req.body.queryResult.parameters.email})
                 .exec(function(err, info){
                     if(err) return next(err);
                     res.json(
