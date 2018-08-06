@@ -65,8 +65,8 @@ router.post("/", function(req, res, next){
 
     if(req.body.queryResult.action === "suspend.date"){
     
-        var start = req.body.queryResult.parameters.action;
-        //var end = req.body.queryResult.outputContexts[1].parameters.date-period.endDate;
+        var start = req.body.queryResult.parameters["date-period"].startDate;
+        var end = req.body.queryResult.parameters["date-period"].endDate;
         var name = req.body.queryResult.outputContexts[1].parameters.name;
         var email = req.body.queryResult.outputContexts[1].parameters.email;
         var accountNumber = req.body.queryResult.outputContexts[1].parameters.accountNumber;
@@ -86,8 +86,8 @@ router.post("/", function(req, res, next){
                     Reference: name,
                     Name: "ApiQueue",
                     SpecificContent: {
-                        start: start,
-                        //end: end,
+                        startDate: start,
+                        endDate: end,
                         name: name,
                         email: email,
                         accountNumber: accountNumber,
@@ -113,6 +113,8 @@ router.post("/", function(req, res, next){
                 }
             });
         });
+
+        res.sendStatus(201);
     }
 });
 
