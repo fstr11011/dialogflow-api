@@ -22,17 +22,17 @@ router.post("/", function(req, res, next){
                         res.json(
                             {
                                 "fulfillmentText": "Hello " + info.name + ". Which of your the following books would you like to suspend?\n" + info.books,
-                                //"outputContexts": [
-                                //    {
-                                //      "name": "projects/api-test-a47a7/agent/sessions/dialogflow-jeiobw@api-test-a47a7.iam.gserviceaccount.com/contexts/suspend-followup",
-                                //      "lifespanCount": 5,
-                                //      "parameters": {
-                                //        "name": info.name,
-                                //        "email": info.email,
-                                //        "accountNumber": info.accountNumber
-                                //      }
-                                //    }
-                                //  ]
+                                "outputContexts": [
+                                    {
+                                      "name": "projects/api-test-a47a7/agent/sessions/dialogflow-jeiobw@api-test-a47a7.iam.gserviceaccount.com/contexts/suspend-followup",
+                                      "lifespanCount": 5,
+                                      "parameters": {
+                                        "name": info.name,
+                                        "email": info.email,
+                                        "accountNumber": info.accountNumber
+                                      }
+                                    }
+                                ]
                             }
                         );
                     } else {
