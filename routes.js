@@ -15,7 +15,6 @@ router.get("/", function(req, res, next){
 
 router.post("/", function(req, res, next){
     if(req.body.queryResult.action === "userinfopls"){
-        try {
             UserInfo.findOne({accountNumber: req.body.queryResult.parameters.accountNumber})
                 .exec(function(err, info){
                     if(err) return next(err);
@@ -24,16 +23,7 @@ router.post("/", function(req, res, next){
                             "fulfillmentText": "Hello " + info.name + " these are your books: " + info.books,
                         }
                     );
-                });
-        } catch (error) {
-            console.error(err);
-            res.json(
-                {
-                    "fulfillmentText": "No account was found for the number " + req.body.queryResult.parameters.accountNumber,
-                }
-            );
-        }
-        
+            });
     }
 });
 
