@@ -21,7 +21,7 @@ router.post("/", function(req, res, next){
                     if(info){
                         res.json(
                             {
-                                "fulfillmentText": "Hello " + info.name + " these are your books: " + info.books,
+                                "fulfillmentText": "Hello " + info.name + ". Which of your the following books would you like to suspend?\n" + info.books,
                             }
                         );
                     } else {
