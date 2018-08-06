@@ -1,2 +1,2 @@
 # dialogflow-api
-A test API fot dialogflow Chat bot
+A test API for dialogflow Chat bot
