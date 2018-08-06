@@ -3,6 +3,22 @@
 var express = require("express");
 var router = express.Router();
 var UserInfo = require("./models").UserInfo;
+var request = require("request");
+
+var postData = {
+    tenancyName: "Roboyo_MGladstein",
+    usernameOrEmailAddress: "admin",
+    password: "Mg200120798"
+};
+
+var auth = "https://platform.uipath.com/api/account/authenticate";
+
+var authOptions = {
+    method: "post",
+    body: postData,
+    json: true,
+    url: auth
+};
 
 router.get("/", function(req, res, next){
     UserInfo.find({})
@@ -42,6 +58,45 @@ router.post("/", function(req, res, next){
                     }
                     
             });
+    }
+
+    if(req.body.queryResult.action === "suspend.date"){
+        request(authOptions, function(err, res, body){
+            if(err){
+                console.error('error posting json: ', err);
+                throw err;
+            }
+
+            var queueURL = "https://platform.uipath.com/odata/Queues/UiPathODataSvc.AddQueueItem";
+            
+            var postDataQueue = {
+                itemData: {
+                    Priority: "Normal",
+                    Name: "ApiQueue",
+                    SpecificContent: {
+                        name: req.body.outputContexts[1].parameters.name,
+                        email: req.body.outputContexts[1].parameters.email
+                    }
+                }
+            };
+
+            var queueOptions = {
+                method: "post",
+                body: postDataQueue,
+                auth: { bearer: body.result},
+                json: true,
+                url: queueURL
+            };
+
+            request(queueOptions, function(err, res, body){
+                if(err){
+                    console.error('error parsing json: ', err);
+                    throw err;
+                } else{
+                    console.log("Operation succesfully completed");
+                }
+            });
+        });
     }
 });
 
