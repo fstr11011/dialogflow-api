@@ -72,7 +72,7 @@ router.post("/", function(req, res, next){
         var accountNumber = req.body.queryResult.outputContexts[1].parameters.accountNumber;
         var book = req.body.queryResult.outputContexts[1].parameters.books;
 
-        request(authOptions, function(err, res, body){
+        request(authOptions, function(err, response, body){
             if(err){
                 console.error('error posting json: ', err);
                 throw err;
@@ -104,17 +104,20 @@ router.post("/", function(req, res, next){
                 url: queueURL
             };
 
-            request(queueOptions, function(err, res, body){
+            request(queueOptions, function(err, response, body){
                 if(err){
                     console.error('error parsing json: ', err);
+                    res.sendStatus(500);
                     throw err;
                 } else{
                     console.log("Operation succesfully completed");
+                    res.json({
+                        fulfillmentText: "Your suspension is being processed. You will recieve an email shortly."
+                    });
+                    res.sendStatus(201);
                 }
             });
         });
-
-        res.sendStatus(201);
     }
 });
 
