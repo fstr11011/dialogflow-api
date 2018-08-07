@@ -5,13 +5,14 @@ var router = express.Router();
 var UserInfo = require("./models").UserInfo;
 var request = require("request");
 var bodyParser = require("body-parser").json;
+var config = require("./config");
 
 router.use(bodyParser());
 
 var postData = {
-    tenancyName: "Roboyo_MGladstein",
-    usernameOrEmailAddress: "admin",
-    password: "Mg200120798"
+    tenancyName: config.tenancyName,
+    usernameOrEmailAddress: config.usernameOrEmailAddress,
+    password: config.password
 };
 
 var auth = "https://platform.uipath.com/api/account/authenticate";
