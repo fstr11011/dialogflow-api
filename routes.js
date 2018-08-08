@@ -38,10 +38,12 @@ router.post("/", function(req, res, next){
 
     if(req.body.queryResult.action === "input.welcome"){
         res.json({
-            followupEvent: {
-                name: "test_event",
-             }
-        });
+            "fulfillmentText": "This is a text response",
+            "followupEventInput": {
+              "name": "test_event",
+              "languageCode": "en-US",
+            }
+          });
     }
 
     if(req.body.queryResult.action === "userinfopls"){
