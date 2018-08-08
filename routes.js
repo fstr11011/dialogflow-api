@@ -39,7 +39,7 @@ router.post("/", function(req, res, next){
     if(req.body.queryResult.action === "input.welcome"){
         res.json({
             "followupEventInput": {
-                "name": "null_test",
+                "name": "event_test",
                 "languageCode": "en-US",
               }
           });
