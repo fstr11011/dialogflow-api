@@ -25,6 +25,11 @@ var authOptions = {
 };
 
 router.get("/", function(req, res, next){
+
+    res.json({
+        fulfillmentText: "Greetings"
+    });
+
     UserInfo.find({})
             .sort({accountNumber: 1})
             .exec(function(err, info){
@@ -34,6 +39,8 @@ router.get("/", function(req, res, next){
 });
 
 router.post("/", function(req, res, next){
+
+
     if(req.body.queryResult.action === "userinfopls"){
             UserInfo.findOne({accountNumber: req.body.queryResult.parameters.accountNumber})
                 .exec(function(err, info){
